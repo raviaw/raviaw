@@ -1,11 +1,10 @@
 import java.util.Random;
 
 public class ArrayUtils {
-    final static Random r = new Random();
-
+    public final static Random RANDOM = new Random();
+    
     public static void exchange(int[] A, int i, int j) {
-        System.out.println("exchange(i = " + i + ", j = " + j + ", A[i] = " + (i < A.length ? A[i] : -1) + ", A[j] = "
-                + (j < A.length ? A[j] : -1) + ")");
+        // System.out.println("exchange(i = " + i + ", j = " + j + ", A[i] = " + (i < A.length ? A[i] : -1) + ", A[j] = "+ (j < A.length ? A[j] : -1) + ")");
         int a = A[i];
         A[i] = A[j];
         A[j] = a;
@@ -21,7 +20,7 @@ public class ArrayUtils {
 
         // Shuffle
         for (int i = elements - 1; i > 0; i--) {
-            int n = r.nextInt(i);
+            int n = RANDOM.nextInt(i);
             exchange(A, i, n);
         }
 
@@ -31,7 +30,7 @@ public class ArrayUtils {
     public static int[] randomArray(int elements, int lowerBound, int higherBound) {
         int[] A = new int[elements];
         for (int i = 0; i < elements; i++)
-            A[i] = r.nextInt(higherBound - lowerBound) + lowerBound;
+            A[i] = RANDOM.nextInt(higherBound - lowerBound) + lowerBound;
 
         return A;
     }
