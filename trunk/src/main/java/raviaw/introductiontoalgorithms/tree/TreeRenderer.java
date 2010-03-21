@@ -8,15 +8,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JFrame;
 
+import raviaw.introductiontoalgorithms.ArrayUtils;
 import raviaw.introductiontoalgorithms.Heap;
 
 public class TreeRenderer<T> extends JFrame {
     private static final long serialVersionUID = -7521686076788731925L;
+    // Not generified as it is static. How to solve this (relativelly small)
+    // problem?
+    private static TreeRenderer renderer;
     TreeRendererNode<T> root;
     int levels;
 
-    public static <T> TreeRenderer<T> renderTree(Node<T> root) {
-        return new TreeRenderer<T>(root);
+    public static <T> void renderTree(Node<T> root) {
+        if (renderer == null) {
+            renderer = new TreeRenderer<T>(root);
+        } else {
+            renderer.update(root);
+        }
     }
 
     private TreeRenderer(final Node<T> root) {
@@ -32,13 +40,18 @@ public class TreeRenderer<T> extends JFrame {
         AtomicInteger levels = new AtomicInteger(0);
         this.root = createNode(node, 0, 0.5, 0, levels);
         this.levels = levels.get();
+        repaint();
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         // Now it is our time
+        if (levels == 0) 
+            return;
+
         Dimension dimension = getSize();
+        g.clearRect(0, 0, dimension.width, dimension.height);
         setFont(new Font("arial", 0, 15));
         drawNode(g, dimension, root, (dimension.height - 80) / levels);
     }
@@ -48,7 +61,7 @@ public class TreeRenderer<T> extends JFrame {
     }
 
     private int nodeY(TreeRendererNode<T> n, float ymultiplier) {
-        return (int)(n.y * ymultiplier + 40);
+        return (int) (n.y * ymultiplier + 40);
     }
 
     public void drawNode(Graphics g, Dimension d, TreeRendererNode<T> node, float ymultiplier) {
@@ -101,6 +114,27 @@ public class TreeRenderer<T> extends JFrame {
      */
     public static void main(String[] args) {
         renderTree(TreeBuilder.fromHeap(new Heap(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })));
+        new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(300);
+                    renderTree(TreeBuilder.fromHeap(new Heap(new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 })));
+                    Thread.sleep(1000);
+                    renderTree(TreeBuilder.fromHeap(new Heap(ArrayUtils.shuffledArray(20, 0))));
+                    Thread.sleep(1000);
+                    renderTree(TreeBuilder.fromHeap(new Heap(ArrayUtils.shuffledArray(20, 0))));
+                    Thread.sleep(1000);
+                    renderTree(TreeBuilder.fromHeap(new Heap(ArrayUtils.shuffledArray(20, 0))));
+                    Thread.sleep(1000);
+                    renderTree(TreeBuilder.fromHeap(new Heap(ArrayUtils.shuffledArray(20, 0))));
+                    Thread.sleep(1000);
+                    renderTree(TreeBuilder.fromHeap(new Heap(ArrayUtils.shuffledArray(20, 0))));
+                } catch (InterruptedException ex) {
+                }
+            }
+        }.start();
     }
 
     private static class TreeRendererNode<T> {
