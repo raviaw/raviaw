@@ -16,7 +16,6 @@ public class Heapsort {
         Heap h = new Heap();
         System.out.println("building heap...");
         h.buildMaxHeap(A);
-        TreeRenderer.renderTree(TreeBuilder.fromHeap(h));
         System.out.println("heapsort...");
         h.heapsort();
     }

@@ -2,13 +2,16 @@ package raviaw.introductiontoalgorithms;
 
 import java.util.Arrays;
 
+import raviaw.introductiontoalgorithms.tree.TreeBuilder;
+import raviaw.introductiontoalgorithms.tree.TreeRenderer;
+
 /**
  * The top element in the heap (1) is the largest element
  */
 public class Heap {
     private int heapSize;
     private int[] A;
-    
+
     public Heap() {
     }
 
@@ -22,6 +25,11 @@ public class Heap {
             heapSize--;
             System.out.println("invoking maxHeapify on heapsort (i = " + i + ")");
             maxHeapify(0);
+            TreeRenderer.renderTree(TreeBuilder.fromHeap(this));
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+            }
         }
     }
 
@@ -79,6 +87,11 @@ public class Heap {
         heapSize = A.length;
         for (int i = A.length / 2 - 1; i >= 0; i--) {
             maxHeapify(i);
+            TreeRenderer.renderTree(TreeBuilder.fromHeap(this));
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+            }
         }
         printLongHeap(0, 0, "");
     }
