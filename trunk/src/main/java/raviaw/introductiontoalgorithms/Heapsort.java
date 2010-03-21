@@ -1,3 +1,7 @@
+package raviaw.introductiontoalgorithms;
+
+import raviaw.introductiontoalgorithms.tree.TreeBuilder;
+import raviaw.introductiontoalgorithms.tree.TreeRenderer;
 
 public class Heapsort {
 
@@ -12,7 +16,7 @@ public class Heapsort {
         Heap h = new Heap();
         System.out.println("building heap...");
         h.buildMaxHeap(A);
-        TreeRenderer.renderTree(h.elements());
+        TreeRenderer.renderTree(TreeBuilder.fromHeap(h));
         System.out.println("heapsort...");
         h.heapsort();
     }

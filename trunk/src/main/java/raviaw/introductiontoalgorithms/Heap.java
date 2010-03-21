@@ -1,11 +1,20 @@
+package raviaw.introductiontoalgorithms;
+
 import java.util.Arrays;
 
 /**
  * The top element in the heap (1) is the largest element
  */
-class Heap {
+public class Heap {
     private int heapSize;
     private int[] A;
+    
+    public Heap() {
+    }
+
+    public Heap(int[] elements) {
+        buildMaxHeap(elements);
+    }
 
     public void heapsort() {
         for (int i = A.length - 1; i > 0; i--) {
@@ -14,6 +23,10 @@ class Heap {
             System.out.println("invoking maxHeapify on heapsort (i = " + i + ")");
             maxHeapify(0);
         }
+    }
+
+    public int heapSize() {
+        return heapSize;
     }
 
     public int[] elements() {
