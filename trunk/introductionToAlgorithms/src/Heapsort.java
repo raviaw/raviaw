@@ -2,10 +2,19 @@
 public class Heapsort {
 
     public static void main(String[] args) {
-        int[] array = ArrayUtils.shuffledArray(32, 1);
+        int[] array = ArrayUtils.shuffledArray(41, 1);
         ArrayUtils.printArrayElements("before: ", array);
         Heap.heapsort(array);
         ArrayUtils.printArrayElements("after: ", array);
+    }
+
+    // This is where the error is
+    public static int left(int i) {
+        return i * 2 + 1;
+    }
+
+    public static int right(int i) {
+        return i * 2 + 2;
     }
 
     /**
@@ -16,6 +25,7 @@ public class Heapsort {
             Heap h = new Heap();
             System.out.println("building heap...");
             h.buildMaxHeap(A);
+            TreeRenderer.renderTree(h.A);
             System.out.println("heapsort...");
             h.heapsort();
         }
@@ -30,15 +40,6 @@ public class Heapsort {
                 System.out.println("invoking maxHeapify on heapsort (i = " + i + ")");
                 maxHeapify(0);
             }
-        }
-
-        // This is where the error is
-        private static int left(int i) {
-            return i * 2 + 1;
-        }
-
-        private static int right(int i) {
-            return i * 2 + 2;
         }
 
         /*
